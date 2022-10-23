@@ -1,4 +1,4 @@
-# Terraform module nocode-webserver-aws
+# Terraform module aws-nocode-webserver
 
 Provisions a simple nginx webserver with sample HashiCafe website in AWS.
 
