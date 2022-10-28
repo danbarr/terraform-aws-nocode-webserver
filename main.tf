@@ -47,15 +47,15 @@ resource "random_integer" "product" {
   }
 }
 
-data "hcp_packer_iteration" "ubuntu" {
+data "hcp_packer_iteration" "ubuntu-webserver" {
   bucket_name = var.packer_bucket
   channel     = var.packer_channel
 }
 
-data "hcp_packer_image" "ubuntu" {
+data "hcp_packer_image" "ubuntu-webserver" {
   bucket_name    = var.packer_bucket
   cloud_provider = "aws"
-  iteration_id   = data.hcp_packer_iteration.ubuntu.ulid
+  iteration_id   = data.hcp_packer_iteration.ubuntu-webserver.ulid
   region         = var.region
 }
 
@@ -65,6 +65,13 @@ resource "aws_vpc" "hashicafe" {
 
   tags = {
     Name = "${var.prefix}-vpc-${var.region}"
+  }
+
+  lifecycle {
+    postcondition {
+      condition     = self.enable_dns_hostnames == true
+      error_message = "VPC must have DNS hostnames enabled."
+    }
   }
 }
 
@@ -139,7 +146,7 @@ resource "aws_route_table_association" "hashicafe" {
 }
 
 resource "aws_instance" "hashicafe" {
-  ami                         = data.hcp_packer_image.ubuntu.cloud_image_id
+  ami                         = data.hcp_packer_image.ubuntu-webserver.cloud_image_id
   instance_type               = var.instance_type
   associate_public_ip_address = true
   subnet_id                   = aws_subnet.hashicafe.id
@@ -148,6 +155,23 @@ resource "aws_instance" "hashicafe" {
 
   tags = {
     Name = "${var.prefix}-hashicafe-instance"
+  }
+
+  lifecycle {
+    precondition {
+      condition     = data.hcp_packer_image.ubuntu-webserver.region == var.region
+      error_message = "The selected image must be in the same region as the deployed resources."
+    }
+
+    postcondition {
+      condition     = self.ami == data.hcp_packer_image.ubuntu-webserver.cloud_image_id
+      error_message = "A newer source AMI is available in the HCP Packer channel, please re-deploy."
+    }
+
+    postcondition {
+      condition     = self.public_dns != ""
+      error_message = "EC2 instance must be in a VPC that has public DNS hostnames enabled."
+    }
   }
 }
 
