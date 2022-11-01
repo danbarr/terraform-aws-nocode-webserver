@@ -195,14 +195,18 @@ resource "null_resource" "configure-web-app" {
     build_number = local.timestamp
   }
 
+  connection {
+    type        = "ssh"
+    user        = "ubuntu"
+    private_key = tls_private_key.hashicafe.private_key_pem
+    host        = aws_eip.hashicafe.public_ip
+  }
+
   provisioner "remote-exec" {
-    inline = ["sudo chown -R ubuntu:ubuntu /var/www/html"]
-    connection {
-      type        = "ssh"
-      user        = "ubuntu"
-      private_key = tls_private_key.hashicafe.private_key_pem
-      host        = aws_eip.hashicafe.public_ip
-    }
+    inline = [
+      "sudo mkdir /var/www/html/img",
+      "sudo chown -R ubuntu:ubuntu /var/www/html"
+    ]
   }
 
   provisioner "file" {
@@ -212,13 +216,11 @@ resource "null_resource" "configure-web-app" {
       product_image = var.hashi_products[random_integer.product.result].image_file
     })
     destination = "/var/www/html/index.html"
+  }
 
-    connection {
-      type        = "ssh"
-      user        = "ubuntu"
-      private_key = tls_private_key.hashicafe.private_key_pem
-      host        = aws_eip.hashicafe.public_ip
-    }
+  provisioner "file" {
+    source      = "files/img/"
+    destination = "/var/www/html/img"
   }
 }
 
