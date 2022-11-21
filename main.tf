@@ -161,7 +161,7 @@ resource "aws_instance" "hashicafe" {
     apt-get -qy -o "Dpkg::Options::=--force-confdef" -o "Dpkg::Options::=--force-confold" install nginx
     systemctl enable nginx --now
     ufw allow http
-    mkdir /var/www/html/img
+    mkdir -p /var/www/html/img
     chown -R ubuntu:ubuntu /var/www/html
   EOF
 
