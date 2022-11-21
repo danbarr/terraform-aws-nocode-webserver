@@ -159,6 +159,7 @@ resource "aws_instance" "hashicafe" {
     echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selections
     apt-get -qy update
     apt-get -qy -o "Dpkg::Options::=--force-confdef" -o "Dpkg::Options::=--force-confold" install nginx
+    systemctl enable nginx --now
     ufw allow http
     mkdir /var/www/html/img
     chown -R ubuntu:ubuntu /var/www/html
