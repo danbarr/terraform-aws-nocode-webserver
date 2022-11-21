@@ -212,6 +212,12 @@ resource "null_resource" "configure-web-app" {
     user        = "ubuntu"
     private_key = tls_private_key.hashicafe.private_key_pem
     host        = aws_eip.hashicafe.public_ip
+    timeout     = "5m"
+  }
+
+  provisioner "remote-exec" {
+    # We need to wait for cloud-init to finish so permissions are correct.
+    inline = ["/usr/bin/cloud-init status --wait"]
   }
 
   provisioner "file" {
