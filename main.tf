@@ -153,6 +153,17 @@ resource "aws_instance" "hashicafe" {
   vpc_security_group_ids      = [aws_security_group.hashicafe.id]
   key_name                    = aws_key_pair.hashicafe.key_name
 
+  user_data = <<-EOF
+    #!/bin/bash
+
+    echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selections
+    apt-get -qy update
+    apt-get -qy -o "Dpkg::Options::=--force-confdef" -o "Dpkg::Options::=--force-confold" install nginx
+    ufw allow http
+    mkdir /var/www/html/img
+    chown -R ubuntu:ubuntu /var/www/html
+  EOF
+
   tags = {
     Name = "${var.prefix}-hashicafe-instance"
   }
@@ -200,13 +211,6 @@ resource "null_resource" "configure-web-app" {
     user        = "ubuntu"
     private_key = tls_private_key.hashicafe.private_key_pem
     host        = aws_eip.hashicafe.public_ip
-  }
-
-  provisioner "remote-exec" {
-    inline = [
-      "sudo mkdir /var/www/html/img",
-      "sudo chown -R ubuntu:ubuntu /var/www/html"
-    ]
   }
 
   provisioner "file" {
