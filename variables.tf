@@ -6,7 +6,7 @@ variable "prefix" {
 variable "region" {
   type        = string
   description = "The region where the resources are created."
-  default     = "us-east-1"
+  default     = "us-east-2"
 }
 
 variable "env" {
@@ -17,7 +17,7 @@ variable "env" {
 variable "packer_bucket" {
   type        = string
   description = "HCP Packer bucket name containing the source image."
-  default     = "ubuntu-focal-webserver"
+  default     = "ubuntu20-nginx"
 }
 
 variable "packer_channel" {
