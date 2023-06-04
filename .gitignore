@@ -1,5 +1,8 @@
 .DS_Store
 
+# Don't lock in a module
+.terraform.lock.hcl
+
 # Local .terraform directories
 **/.terraform/*
 

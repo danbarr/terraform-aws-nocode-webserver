@@ -13,10 +13,16 @@ variable "env" {
   description = "Value for the environment tag."
 }
 
+variable "department" {
+  type        = string
+  description = "Value for the department tag."
+  default     = "WebDev"
+}
+
 variable "packer_bucket" {
   type        = string
   description = "HCP Packer bucket name containing the source image."
-  default     = "ubuntu20-nginx"
+  default     = "ubuntu22-nginx"
 }
 
 variable "packer_channel" {

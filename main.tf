@@ -1,12 +1,13 @@
 terraform {
+  required_version = ">= 1.2"
   required_providers {
     aws = {
       source  = "hashicorp/aws"
-      version = "~> 4.0"
+      version = "~> 5.0"
     }
     hcp = {
       source  = "hashicorp/hcp"
-      version = "~> 0.46.0"
+      version = "~> 0.57"
     }
     null = {
       source  = "hashicorp/null"
@@ -29,7 +30,7 @@ provider "aws" {
   default_tags {
     tags = {
       environment = var.env
-      department  = "TPMM"
+      department  = var.department
       application = "HashiCafe website"
     }
   }
@@ -187,10 +188,7 @@ resource "aws_instance" "hashicafe" {
   }
 }
 
-resource "aws_eip" "hashicafe" {
-  instance = aws_instance.hashicafe.id
-  vpc      = true
-}
+resource "aws_eip" "hashicafe" {}
 
 resource "aws_eip_association" "hashicafe" {
   instance_id   = aws_instance.hashicafe.id
