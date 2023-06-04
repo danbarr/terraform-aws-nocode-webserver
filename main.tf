@@ -30,7 +30,7 @@ provider "aws" {
   default_tags {
     tags = {
       environment = var.env
-      department  = "TPMM"
+      department  = var.department
       application = "HashiCafe website"
     }
   }

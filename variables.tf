@@ -13,6 +13,7 @@ variable "env" {
   description = "Value for the environment tag."
 }
 
+  type        = string
 variable "packer_bucket" {
   type        = string
   description = "HCP Packer bucket name containing the source image."
