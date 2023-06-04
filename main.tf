@@ -187,10 +187,7 @@ resource "aws_instance" "hashicafe" {
   }
 }
 
-resource "aws_eip" "hashicafe" {
-  instance = aws_instance.hashicafe.id
-  vpc      = true
-}
+resource "aws_eip" "hashicafe" {}
 
 resource "aws_eip_association" "hashicafe" {
   instance_id   = aws_instance.hashicafe.id
