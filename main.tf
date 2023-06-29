@@ -219,7 +219,7 @@ resource "null_resource" "configure-web-app" {
   }
 
   provisioner "file" {
-    content = templatefile("files/index.html", {
+    content = templatefile("${path.module}/files/index.html", {
       product_name  = var.hashi_products[random_integer.product.result].name
       product_color = var.hashi_products[random_integer.product.result].color
       product_image = var.hashi_products[random_integer.product.result].image_file
@@ -228,7 +228,7 @@ resource "null_resource" "configure-web-app" {
   }
 
   provisioner "file" {
-    source      = "files/img/"
+    source      = "${path.module}/files/img/"
     destination = "/var/www/html/img"
   }
 }
