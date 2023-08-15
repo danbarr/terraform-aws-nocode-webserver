@@ -48,15 +48,10 @@ resource "random_integer" "product" {
   }
 }
 
-data "hcp_packer_iteration" "ubuntu-webserver" {
-  bucket_name = var.packer_bucket
-  channel     = var.packer_channel
-}
-
 data "hcp_packer_image" "ubuntu-webserver" {
   bucket_name    = var.packer_bucket
+  channel        = var.packer_channel
   cloud_provider = "aws"
-  iteration_id   = data.hcp_packer_iteration.ubuntu-webserver.ulid
   region         = var.region
 }
 
