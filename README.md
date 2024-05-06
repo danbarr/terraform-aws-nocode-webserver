@@ -17,7 +17,7 @@ Also requires environment variables containing an HCP service principal credenti
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.2 |
 | <a name="requirement_aws"></a> [aws](#requirement\_aws) | ~> 5.0 |
-| <a name="requirement_hcp"></a> [hcp](#requirement\_hcp) | ~> 0.57 |
+| <a name="requirement_hcp"></a> [hcp](#requirement\_hcp) | ~> 0.82 |
 | <a name="requirement_null"></a> [null](#requirement\_null) | ~> 3.1 |
 | <a name="requirement_random"></a> [random](#requirement\_random) | ~> 3.4 |
 | <a name="requirement_tls"></a> [tls](#requirement\_tls) | ~> 4.0 |
@@ -27,7 +27,7 @@ Also requires environment variables containing an HCP service principal credenti
 | Name | Version |
 |------|---------|
 | <a name="provider_aws"></a> [aws](#provider\_aws) | ~> 5.0 |
-| <a name="provider_hcp"></a> [hcp](#provider\_hcp) | ~> 0.57 |
+| <a name="provider_hcp"></a> [hcp](#provider\_hcp) | ~> 0.82 |
 | <a name="provider_null"></a> [null](#provider\_null) | ~> 3.1 |
 | <a name="provider_random"></a> [random](#provider\_random) | ~> 3.4 |
 | <a name="provider_tls"></a> [tls](#provider\_tls) | ~> 4.0 |
@@ -53,8 +53,7 @@ No modules.
 | [null_resource.configure-web-app](https://registry.terraform.io/providers/hashicorp/null/latest/docs/resources/resource) | resource |
 | [random_integer.product](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/integer) | resource |
 | [tls_private_key.hashicafe](https://registry.terraform.io/providers/hashicorp/tls/latest/docs/resources/private_key) | resource |
-| [hcp_packer_image.ubuntu-webserver](https://registry.terraform.io/providers/hashicorp/hcp/latest/docs/data-sources/packer_image) | data source |
-| [hcp_packer_iteration.ubuntu-webserver](https://registry.terraform.io/providers/hashicorp/hcp/latest/docs/data-sources/packer_iteration) | data source |
+| [hcp_packer_artifact.ubuntu-webserver](https://registry.terraform.io/providers/hashicorp/hcp/latest/docs/data-sources/packer_artifact) | data source |
 
 ## Inputs
 
